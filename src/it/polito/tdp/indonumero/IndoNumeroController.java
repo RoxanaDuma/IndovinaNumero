@@ -88,6 +88,11 @@ public class IndoNumeroController {
     		
     		int num = Integer.parseInt(numS); //Converto la stringa in numero
     		
+    		if( num < 1 || num > NMAX ) {
+    			txtLog.appendText("Valore fuori range.\n");
+    			return;
+    		}
+    		
     		if( num == this.segreto ) {
     			//Ha indovinato
     			txtLog.appendText("Hai vinto!\n");
