@@ -65,6 +65,12 @@ public class IndoNumeroController {
     	txtCurr.setText(String.format("%d", this.tentativi));
     	txtMax.setText(String.format("%d", TMAX));
     	
+    	//Ripulisco le caselle ogni volta che inizio una nuova partita
+    	txtLog.clear();
+    	txtTentativo.clear();
+    	
+    	txtLog.setText(String.format("Indovina un numero tra %d e %d\n", 1,NMAX));
+    	
     }
 
     @FXML
@@ -81,6 +87,40 @@ public class IndoNumeroController {
     	try {
     		
     		int num = Integer.parseInt(numS); //Converto la stringa in numero
+    		
+    		if( num == this.segreto ) {
+    			//Ha indovinato
+    			txtLog.appendText("Hai vinto!\n");
+    			//Chiudi partita
+    			boxGioco.setDisable(true);
+    			btnNuova.setDisable(false);
+    			this.inGame = false ;
+    			
+    		}else {
+    			//Tentativo errato
+    			this.tentativi++;
+    			txtCurr.setText(String.format("%d", this.tentativi));
+    			
+    			if( this.tentativi == this.TMAX ) {
+    				//Hai perso
+    				txtLog.appendText(String.format("Hai perso ! Il numero segreto era: %d \n", this.segreto));
+    				
+    				boxGioco.setDisable(true);
+        			btnNuova.setDisable(false);
+        			this.inGame = false ;
+        			
+    			}else {
+    				//Ancora in gioco
+    				if( num < segreto ) {
+    					//Troppo basso
+    					txtLog.appendText("Il numero inserito e' troppo basso\n");
+    					
+    				}else {
+    					//Troppo alto
+    					txtLog.appendText("Il numero inserito e' troppo alto\n");
+    				}
+    			}
+    		}
     	
     	}catch(NumberFormatException ex) {
     		
